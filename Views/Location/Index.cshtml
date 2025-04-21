@@ -1,0 +1,117 @@
+﻿@{
+    ViewBag.Title = "Location Selector";
+}
+
+<h2>Select Location</h2>
+
+<div>
+    <label>State</label>
+    <select id="StateDropdown" class="form-control">
+        <option value="">-- Select State --</option>
+        @foreach (var state in (List<LocationTask.Models.StateModel>)ViewBag.States)
+        {
+            <option value="@state.StateId">@state.StateName</option>
+        }
+    </select>
+</div>
+
+<div>
+    <label>City</label>
+    <select id="CityDropdown" class="form-control" disabled>
+        <option value="">-- Select City --</option>
+    </select>
+</div>
+
+<div>
+    <label>Taluk</label>
+    <select id="TalukDropdown" class="form-control" disabled>
+        <option value="">-- Select Taluk --</option>
+    </select>
+</div>
+
+<br />
+<button id="viewBtn" class="btn btn-primary">View Details</button>
+
+<hr />
+<table class="table table-bordered" id="resultTable" style="display:none;">
+    <thead>
+        <tr>
+            <th>State</th>
+            <th>City</th>
+            <th>Taluk</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td id="selState"></td>
+            <td id="selCity"></td>
+            <td id="selTaluk"></td>
+        </tr>
+    </tbody>
+</table>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+               $('#StateDropdown').change(function () {
+            var stateId = $(this).val();
+
+            $('#CityDropdown').html('<option value="">-- Select City --</option>').prop('disabled', true);
+            $('#TalukDropdown').html('<option value="">-- Select Taluk --</option>').prop('disabled', true);
+
+            if (stateId) {
+                $.getJSON('/Location/GetCities', { stateId: stateId }, function (cities) {
+                    console.log("Cities response: ", cities); // Check this in console
+
+                    $.each(cities, function (i, city) {
+                        $('#CityDropdown').append($('<option>', {
+                            value: city.cityId,
+                            text: city.cityName
+                        }));
+                    });
+
+                    $('#CityDropdown').prop('disabled', false);
+                });
+            }
+        });
+
+
+        $('#CityDropdown').change(function () {
+            const cityId = $(this).val();
+            $('#TalukDropdown').html('<option value="">-- Select Taluk --</option>').prop('disabled', true);
+
+            if (cityId) {
+                $.ajax({
+                    url: '/Location/GetTaluks',
+                    type: 'GET',
+                    data: { cityId: cityId },
+                    success: function (taluks) {
+                        $.each(taluks, function (i, taluk) {
+                            $('#TalukDropdown').append(`<option value="${taluk.talukId}">${taluk.talukName}</option>`);
+                        });
+                        $('#TalukDropdown').prop('disabled', false);
+                    },
+                    error: function () {
+                        alert("Error loading taluks.");
+                    }
+                });
+            }
+        });
+
+        $('#viewBtn').click(function () {
+            const stateText = $('#StateDropdown option:selected').text();
+            const cityText = $('#CityDropdown option:selected').text();
+            const talukText = $('#TalukDropdown option:selected').text();
+
+            if ($('#StateDropdown').val() && $('#CityDropdown').val() && $('#TalukDropdown').val()) {
+                $('#selState').text(stateText);
+                $('#selCity').text(cityText);
+                $('#selTaluk').text(talukText);
+                $('#resultTable').show();
+            } else {
+                alert('Please select all fields.');
+            }
+        });
+    </script>
+}
