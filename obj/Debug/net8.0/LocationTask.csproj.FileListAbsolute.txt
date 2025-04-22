@@ -1,4 +1,3 @@
-D:\DotNet\ASP.NET Core MVC\LocationTask\bin\Debug\net8.0\web.config
 D:\DotNet\ASP.NET Core MVC\LocationTask\bin\Debug\net8.0\appsettings.Development.json
 D:\DotNet\ASP.NET Core MVC\LocationTask\bin\Debug\net8.0\appsettings.json
 D:\DotNet\ASP.NET Core MVC\LocationTask\bin\Debug\net8.0\LocationTask.staticwebassets.runtime.json
@@ -41,3 +40,4 @@ D:\DotNet\ASP.NET Core MVC\LocationTask\obj\Debug\net8.0\refint\LocationTask.dll
 D:\DotNet\ASP.NET Core MVC\LocationTask\obj\Debug\net8.0\LocationTask.pdb
 D:\DotNet\ASP.NET Core MVC\LocationTask\obj\Debug\net8.0\LocationTask.genruntimeconfig.cache
 D:\DotNet\ASP.NET Core MVC\LocationTask\obj\Debug\net8.0\ref\LocationTask.dll
+D:\DotNet\ASP.NET Core MVC\LocationTask\obj\Debug\net8.0\LocationTask.sourcelink.json

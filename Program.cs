@@ -1,7 +1,11 @@
+using LocationTask.Controllers;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddHttpClient<LocationController>();
 
 var app = builder.Build();
 

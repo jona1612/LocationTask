@@ -62,7 +62,7 @@
 
             if (stateId) {
                 $.getJSON('/Location/GetCities', { stateId: stateId }, function (cities) {
-                    console.log("Cities response: ", cities); // Check this in console
+                    console.log("Cities response: ", cities);
 
                     $.each(cities, function (i, city) {
                         $('#CityDropdown').append($('<option>', {
